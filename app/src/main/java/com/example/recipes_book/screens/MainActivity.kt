@@ -1,7 +1,8 @@
-package com.example.recipes_book
+package com.example.recipes_book.screens
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.recipes_book.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
