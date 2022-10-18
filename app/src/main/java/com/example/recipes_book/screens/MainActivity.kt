@@ -30,18 +30,15 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.recipe_item -> {
                     destinationFragment = MainFragment()
-
                 }
 
                 R.id.favourites_item -> {
                     destinationFragment = FavoritesFragment()
-
                 }
 
             }
 
             supportFragmentManager.beginTransaction().replace(R.id.navigation_host, destinationFragment).commit()
-
             true
 
         }

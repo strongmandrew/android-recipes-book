@@ -2,5 +2,9 @@
 <resources>
     <dimen name="bottom_navigation_height">60dp</dimen>
     <dimen name="bottom_navigation_radius">50dp</dimen>
+    <dimen name="normal_text_padding">10dp</dimen>
+    <dimen name="normal_margin">10dp</dimen>
+    <dimen name="recipe_card_margin">20dp</dimen>
+    <dimen name="recipe_card_corners">24dp</dimen>
 
 </resources>
