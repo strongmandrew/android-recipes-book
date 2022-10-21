@@ -19,10 +19,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mActivityMainBinding.root)
+        val destinationFragment: Fragment = MainFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.navigation_host, destinationFragment).commit()
+
     }
 
     override fun onStart() {
         super.onStart()
+
 
         mActivityMainBinding.bottomNavigation.setOnItemSelectedListener {
             lateinit var destinationFragment: Fragment

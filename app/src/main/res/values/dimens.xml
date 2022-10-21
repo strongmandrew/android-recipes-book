@@ -6,5 +6,12 @@
     <dimen name="normal_margin">10dp</dimen>
     <dimen name="recipe_card_margin">20dp</dimen>
     <dimen name="recipe_card_corners">24dp</dimen>
+    <dimen name="search_container_input_radius">20dp</dimen>
+    <dimen name="normal_text">16sp</dimen>
+    <dimen name="normal_padding">10dp</dimen>
+    <dimen name="toolbar_elevation">20dp</dimen>
+    <dimen name="toolbar_height">110dp</dimen>
+    <dimen name="toolbar_padding">16dp</dimen>
+    <dimen name="large_title_text">32sp</dimen>
 
 </resources>

@@ -6,4 +6,6 @@
     <string name="favourites_item">Favourites</string>
     <string name="add_to_favourites_content">Add to favourites</string>
     <string name="recipe_image">Recipe image</string>
+    <string name="search_container_hint">Search</string>
+    <string name="favourites_title">Favourites</string>
 </resources>

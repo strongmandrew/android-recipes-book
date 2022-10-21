@@ -50,11 +50,13 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_navigation_height"
-            android:background="@drawable/bottom_navigation_shadow"
+        android:background="@drawable/bottom_navigation_shadow"
             app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/navigation_host" />
+            app:layout_constraintTop_toBottomOf="@id/navigation_host"
+
+            />
 
 
 
