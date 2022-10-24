@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import com.example.recipes_book.R
 import com.example.recipes_book.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
@@ -19,8 +18,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mActivityMainBinding.root)
-        val destinationFragment: Fragment = MainFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.navigation_host, destinationFragment).commit()
+        val startFragment: Fragment = MainFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.navigation_host, startFragment)
+            .commit()
 
     }
 
@@ -42,7 +43,9 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-            supportFragmentManager.beginTransaction().replace(R.id.navigation_host, destinationFragment).commit()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.navigation_host, destinationFragment)
+                .commit()
             true
 
         }

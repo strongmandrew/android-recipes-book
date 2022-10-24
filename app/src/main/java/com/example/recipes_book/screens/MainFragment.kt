@@ -15,24 +15,29 @@ import androidx.core.view.MenuProvider
 import com.example.recipes_book.R
 import com.example.recipes_book.databinding.FragmentMainBinding
 import com.google.android.material.textfield.TextInputEditText
+import java.lang.RuntimeException
 
 class MainFragment : Fragment() {
+
+    private var _binding: FragmentMainBinding? = null
+    private val binding: FragmentMainBinding
+    get() = _binding ?: throw RuntimeException("FragmentMainBinding is null")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+
+        return binding.root
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val searchItem = view.findViewById<TextInputEditText>(R.id.main_input_field)
-
-        searchItem.setOnEditorActionListener { textView, actionId, _ ->
+        binding.mainInputField.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
                 val searchText = textView.text
@@ -45,5 +50,10 @@ class MainFragment : Fragment() {
             }
             true
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
