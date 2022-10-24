@@ -10,8 +10,9 @@
     <dimen name="normal_text">16sp</dimen>
     <dimen name="normal_padding">10dp</dimen>
     <dimen name="toolbar_elevation">20dp</dimen>
-    <dimen name="toolbar_height">110dp</dimen>
+    <dimen name="main_toolbar_height">110dp</dimen>
     <dimen name="toolbar_padding">16dp</dimen>
     <dimen name="large_title_text">32sp</dimen>
+    <dimen name="favourites_toolbar_height">80dp</dimen>
 
 </resources>
