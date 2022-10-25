@@ -12,6 +12,7 @@ import android.widget.Toolbar
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.MenuProvider
+import androidx.recyclerview.widget.DiffUtil
 import com.example.recipes_book.R
 import com.example.recipes_book.databinding.FragmentMainBinding
 import com.google.android.material.textfield.TextInputEditText
@@ -31,6 +32,7 @@ class MainFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
 
         return binding.root
+
 
     }
 
