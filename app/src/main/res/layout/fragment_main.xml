@@ -21,10 +21,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/swipe_refresh"
+        app:layout_constraintBottom_toTopOf="@id/view_switcher"
         >
 
         <com.google.android.material.textfield.TextInputLayout
+
+
 
             android:layout_width="match_parent"
             app:boxCornerRadiusBottomEnd="@dimen/search_container_input_radius"
@@ -59,47 +61,52 @@
 
     </LinearLayout>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh"
-
+    <ViewSwitcher
+        android:id="@+id/view_switcher"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_container"
+        app:layout_constraintTop_toBottomOf="@id/search_container">
 
-        >
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
 
-        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recycler_holder"
+
             >
 
-            <androidx.recyclerview.widget.RecyclerView
-
-                android:id="@+id/main_recycler"
-                android:overScrollMode="never"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/recipe_item" />
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:id="@+id/progress_bar"
-                />
+                android:id="@+id/recycler_holder"
+                >
 
 
-        </FrameLayout>
+                <androidx.recyclerview.widget.RecyclerView
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    android:id="@+id/main_recycler"
+                    android:overScrollMode="never"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/recipe_item" />
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/progress_bar"
+                    />
 
 
+            </FrameLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </ViewSwitcher>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
