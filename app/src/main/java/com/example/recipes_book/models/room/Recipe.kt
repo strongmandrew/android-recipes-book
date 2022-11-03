@@ -1,12 +1,12 @@
-package com.example.recipes_book.models
+package com.example.recipes_book.models.room
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "favorites")
 data class Recipe(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Int,
 

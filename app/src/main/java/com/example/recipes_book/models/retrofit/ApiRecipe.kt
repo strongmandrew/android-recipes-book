@@ -1,4 +1,6 @@
-package com.example.recipes_book.models
+package com.example.recipes_book.models.retrofit
+
+import com.example.recipes_book.models.room.Recipe
 
 data class ApiRecipe(
     val id: Int,

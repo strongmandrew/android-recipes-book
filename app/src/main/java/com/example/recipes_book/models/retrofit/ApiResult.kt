@@ -1,4 +1,4 @@
-package com.example.recipes_book.models
+package com.example.recipes_book.models.retrofit
 
 data class ApiResult(
     val number: Int,

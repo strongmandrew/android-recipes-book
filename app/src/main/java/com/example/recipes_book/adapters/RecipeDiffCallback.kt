@@ -1,7 +1,7 @@
 package com.example.recipes_book.adapters
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.recipes_book.models.Recipe
+import com.example.recipes_book.models.room.Recipe
 
 class RecipeDiffCallback(
     private val oldList: List<Recipe>,

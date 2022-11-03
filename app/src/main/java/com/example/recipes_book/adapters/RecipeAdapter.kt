@@ -8,9 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestListener
 import com.example.recipes_book.R
-import com.example.recipes_book.models.Recipe
+import com.example.recipes_book.models.room.Recipe
 import com.google.android.material.imageview.ShapeableImageView
 
 class RecipeAdapter: RecyclerView.Adapter<RecipeAdapter.ViewHolder>() {
