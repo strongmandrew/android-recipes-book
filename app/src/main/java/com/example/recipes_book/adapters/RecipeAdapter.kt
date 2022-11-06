@@ -1,20 +1,37 @@
 package com.example.recipes_book.adapters
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.toColorInt
+import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.recipes_book.R
 import com.example.recipes_book.models.room.Recipe
 import com.google.android.material.imageview.ShapeableImageView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class RecipeAdapter: RecyclerView.Adapter<RecipeAdapter.ViewHolder>() {
+class RecipeAdapter(private val onFavouritesClick: FavouritesClickListener):
+    RecyclerView.Adapter<RecipeAdapter.ViewHolder>() {
 
-    private var recipes = listOf<Recipe>()
+    var recipes = listOf<Recipe>()
     set(value) {
         val callback = RecipeDiffCallback(recipes, value)
         val diff = DiffUtil.calculateDiff(callback)
@@ -22,40 +39,87 @@ class RecipeAdapter: RecyclerView.Adapter<RecipeAdapter.ViewHolder>() {
         field = value
     }
 
+    interface FavouritesClickListener {
+        fun onClick(recipe: Recipe)
+    }
+
+
+
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        val card: CardView = itemView.findViewById(R.id.recipe_card_item)
         val titleField: TextView = itemView.findViewById(R.id.title_text)
-        val favouritesButton: ImageButton = itemView.findViewById(R.id.favorites_btn)
+        val favouritesButton: CheckBox = itemView.findViewById(R.id.favorites_btn)
         val imageView: ShapeableImageView = itemView.findViewById(R.id.image_view)
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(viewType, parent, false)
+            .inflate(R.layout.recipe_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.titleField.text = recipes[position].title
 
+        holder.favouritesButton.isChecked = recipes[position].isFavourite
+
+
         holder.favouritesButton.setOnClickListener {
             val newState = !recipes[position].isFavourite
-
             recipes[position].isFavourite = newState
+            holder.favouritesButton.isChecked = newState
+
+            onFavouritesClick.onClick(recipes[position])
         }
 
-        Glide.with(holder.itemView)
-            .load(recipes[position].imageUrl)
-            .placeholder(R.drawable.ic_launcher_background)
-            .into(holder.imageView)
+        var imageBitmap: Bitmap? = holder.imageView.drawable.toBitmap()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            Glide.with(holder.itemView)
+
+                .load(recipes[position].imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .addListener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+
+                        holder.imageView.visibility = ImageView.GONE
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+
+                        imageBitmap = resource?.toBitmap()
+
+                        return false
+                    }
+                })
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(holder.imageView)
+
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val palette = Palette.from(imageBitmap!!).generate()
+
+            val mutedColor = palette.mutedSwatch
+
+            holder.card.setCardBackgroundColor(mutedColor?.rgb ?: "#FFFFFF".toColorInt())
+        }
+
     }
 
     override fun getItemCount(): Int = recipes.size
 
-    override fun getItemViewType(position: Int): Int {
-
-        return if (recipes[position].isFavourite) R.layout.recipe_favourite_item
-        else R.layout.recipe_main_item
-
-    }
 }

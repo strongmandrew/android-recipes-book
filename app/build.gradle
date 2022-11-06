@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -39,20 +40,30 @@ dependencies {
 
     def retrofit_version = "2.9.0"
     def gson_version = "2.9.0"
-
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$gson_version"
 
     def room_version = "2.4.3"
-
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation("androidx.room:room-ktx:$room_version")
 
     def glide_version = "4.14.2"
     implementation "com.github.bumptech.glide:glide:$glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    def coroutines_version = "1.6.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    def lifecycle_version = "2.4.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    def palette_version = "1.0.0"
+    implementation "androidx.palette:palette:$palette_version"
+
+    def swipe_refresh = "1.1.0"
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'

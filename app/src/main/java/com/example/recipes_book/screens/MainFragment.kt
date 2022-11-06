@@ -1,34 +1,38 @@
 package com.example.recipes_book.screens
 
+import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
-import android.widget.SearchView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import android.widget.Toolbar
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuItemCompat
-import androidx.core.view.MenuProvider
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.recipes_book.R
+import com.example.recipes_book.adapters.RecipeAdapter
 import com.example.recipes_book.databinding.FragmentMainBinding
-import com.google.android.material.textfield.TextInputEditText
+import com.example.recipes_book.models.room.Recipe
+import com.example.recipes_book.viewModels.MainFragmentViewModel
 import java.lang.RuntimeException
 
 class MainFragment : Fragment() {
 
-    private var _binding: FragmentMainBinding? = null
-    private val binding: FragmentMainBinding
-    get() = _binding ?: throw RuntimeException("FragmentMainBinding is null")
+    private lateinit var mainFragmentViewModel: MainFragmentViewModel
+    private var _binding : FragmentMainBinding? = null
+    private val binding get() = _binding ?: throw RuntimeException("FragmentMainBinding is null")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
 
         return binding.root
 
@@ -37,23 +41,79 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mainFragmentViewModel = ViewModelProvider(this@MainFragment)[MainFragmentViewModel::class.java]
+
+        val mainAdapter = RecipeAdapter(object: RecipeAdapter.FavouritesClickListener {
+            override fun onClick(recipe: Recipe) {
+                mainFragmentViewModel.changeFavouritesClick(view, requireContext(), recipe)
+
+            }
+        })
+
+        mainFragmentViewModel.getSeenRecipesLD().observe(requireActivity()) {
+            mainAdapter.recipes = it
+        }
+
+        binding.mainRecycler.adapter = mainAdapter
+
+
+        binding.mainRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING ||
+                    newState == RecyclerView.SCROLL_STATE_IDLE) {
+
+                    val manager = recyclerView.layoutManager as LinearLayoutManager
+
+                    if (mainFragmentViewModel.getVisibleRecipes() -
+                        manager.findLastVisibleItemPosition() < 3) {
+
+                        mainFragmentViewModel.extendVisibleRecipes()
+                    }
+
+                }
+            }
+        })
+
+        mainFragmentViewModel.getRecipes()
+
         binding.mainInputField.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
                 val searchText = textView.text
 
+                hideKeyboard(requireContext(), binding.mainInputField)
+                binding.mainInputField.clearFocus()
+
+
                 if (searchText.isNotEmpty()) {
 
-                    TODO()
+                    mainFragmentViewModel.searchRecipe(searchText.toString())
 
                 }
             }
             true
         }
+
+        val swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)
+
+        swipeRefresh.setOnRefreshListener {
+            mainFragmentViewModel.getRecipes()
+            swipeRefresh.isRefreshing = false
+            binding.mainInputField.text?.clear()
+            binding.mainInputField.clearFocus()
+            hideKeyboard(requireContext(), binding.mainInputField)
+        }
+
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+
+    private fun hideKeyboard(context: Context, inputField: EditText ) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(inputField.windowToken, 0)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }

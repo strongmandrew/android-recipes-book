@@ -14,7 +14,7 @@ data class Recipe(
     val title: String,
 
     @ColumnInfo(name = "imageUrl")
-    val imageUrl: String,
+    val imageUrl: String?,
 
     @ColumnInfo(name = "isFavourite")
     var isFavourite: Boolean

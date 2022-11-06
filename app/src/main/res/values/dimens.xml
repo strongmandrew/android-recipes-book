@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="bottom_navigation_height">60dp</dimen>
-    <dimen name="bottom_navigation_radius">50dp</dimen>
+    <dimen name="bottom_navigation_radius">20dp</dimen>
     <dimen name="normal_text_padding">10dp</dimen>
     <dimen name="normal_margin">10dp</dimen>
     <dimen name="recipe_card_margin">20dp</dimen>
@@ -14,5 +14,7 @@
     <dimen name="toolbar_padding">16dp</dimen>
     <dimen name="large_title_text">32sp</dimen>
     <dimen name="favourites_toolbar_height">80dp</dimen>
+    <dimen name="add_to_favourites_height">30dp</dimen>
+    <dimen name="large_margin">20dp</dimen>
 
 </resources>

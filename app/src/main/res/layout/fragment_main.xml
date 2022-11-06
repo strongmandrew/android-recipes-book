@@ -37,7 +37,7 @@
             android:layout_height="match_parent"
             android:hint="@string/search_container_hint"
             app:endIconMode="clear_text"
-
+            app:boxStrokeWidth="2dp"
             app:endIconCheckable="true"
             app:endIconDrawable="@drawable/ico_close"
             app:startIconDrawable="@drawable/ico_search"
@@ -51,57 +51,54 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
-                android:imeOptions="actionSearch"
 
+                android:imeOptions="actionSearch"
                 android:inputType="text"
+                android:textAlignment="gravity"
                 android:textSize="@dimen/normal_text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
 
         android:layout_width="match_parent"
         android:layout_height="0dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_container"
 
+
         >
 
-        <FrameLayout
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/main_recycler"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recycler_holder"
-            >
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/recipe_item"
+            />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-
-                android:id="@+id/main_recycler"
-                android:overScrollMode="never"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/recipe_main_item" />
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:id="@+id/progress_bar"
-                />
-
-
-        </FrameLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <!--<ProgressBar
+            android:id="@+id/main_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

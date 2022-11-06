@@ -56,7 +56,7 @@
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
-            tools:listitem="@layout/recipe_main_item" />
+            tools:listitem="@layout/recipe_item" />
 
     </ViewSwitcher>
 
