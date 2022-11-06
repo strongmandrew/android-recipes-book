@@ -40,7 +40,8 @@ class RecipeAdapter(private val onFavouritesClick: FavouritesClickListener):
     }
 
     interface FavouritesClickListener {
-        fun onClick(recipe: Recipe)
+        fun onAddClick(recipe: Recipe)
+        fun onDeleteClick(recipe: Recipe)
     }
 
 
@@ -70,7 +71,8 @@ class RecipeAdapter(private val onFavouritesClick: FavouritesClickListener):
             recipes[position].isFavourite = newState
             holder.favouritesButton.isChecked = newState
 
-            onFavouritesClick.onClick(recipes[position])
+            if (newState) onFavouritesClick.onAddClick(recipes[position])
+            else onFavouritesClick.onDeleteClick(recipes[position])
         }
 
         var imageBitmap: Bitmap? = holder.imageView.drawable.toBitmap()

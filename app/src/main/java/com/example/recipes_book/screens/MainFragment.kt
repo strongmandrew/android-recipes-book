@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.example.recipes_book.adapters.RecipeAdapter
 import com.example.recipes_book.databinding.FragmentMainBinding
 import com.example.recipes_book.models.room.Recipe
 import com.example.recipes_book.viewModels.MainFragmentViewModel
+import com.google.android.material.snackbar.Snackbar
 import java.lang.RuntimeException
 
 class MainFragment : Fragment() {
@@ -44,13 +46,33 @@ class MainFragment : Fragment() {
         mainFragmentViewModel = ViewModelProvider(this@MainFragment)[MainFragmentViewModel::class.java]
 
         val mainAdapter = RecipeAdapter(object: RecipeAdapter.FavouritesClickListener {
-            override fun onClick(recipe: Recipe) {
-                mainFragmentViewModel.changeFavouritesClick(view, requireContext(), recipe)
+            override fun onAddClick(recipe: Recipe) {
+                mainFragmentViewModel.addToFavourites(recipe)
+                Snackbar
+                    .make(view,
+                        "${recipe.title} added to favourites!",
+                        Snackbar.LENGTH_SHORT)
+                    .show()
+            }
 
+            override fun onDeleteClick(recipe: Recipe) {
+                mainFragmentViewModel.deleteFromFavourites(recipe)
+                Snackbar
+                    .make(view,
+                        "${recipe.title} deleted from favourites!",
+                        Snackbar.LENGTH_SHORT)
+                    .show()
             }
         })
 
-        mainFragmentViewModel.getSeenRecipesLD().observe(requireActivity()) {
+        mainFragmentViewModel.loadingLiveData.observe(viewLifecycleOwner) {
+
+            if (it) binding.mainProgressBar.visibility = ProgressBar.VISIBLE
+            else binding.mainProgressBar.visibility = ProgressBar.GONE
+
+        }
+
+        mainFragmentViewModel.getSeenRecipesLD().observe(viewLifecycleOwner) {
             mainAdapter.recipes = it
         }
 
@@ -65,7 +87,7 @@ class MainFragment : Fragment() {
                     val manager = recyclerView.layoutManager as LinearLayoutManager
 
                     if (mainFragmentViewModel.getVisibleRecipes() -
-                        manager.findLastVisibleItemPosition() < 3) {
+                        manager.findLastVisibleItemPosition() < 4) {
 
                         mainFragmentViewModel.extendVisibleRecipes()
                     }

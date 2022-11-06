@@ -15,4 +15,6 @@ interface FavouritesDao {
     @Delete
     suspend fun delete(recipe: Recipe)
 
+    @Query("SELECT COUNT(*) FROM favorites WHERE id=:id")
+    suspend fun entryInFavourites(id: Int): Int
 }
