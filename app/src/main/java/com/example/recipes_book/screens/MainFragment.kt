@@ -1,5 +1,6 @@
 package com.example.recipes_book.screens
 
+import BounceEdgeEffectFactory
 import android.content.Context
 import android.opengl.Visibility
 import android.os.Bundle
@@ -78,6 +79,7 @@ class MainFragment : Fragment() {
 
         binding.mainRecycler.adapter = mainAdapter
 
+        binding.mainRecycler.edgeEffectFactory = BounceEdgeEffectFactory()
 
         binding.mainRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -114,16 +116,6 @@ class MainFragment : Fragment() {
                 }
             }
             true
-        }
-
-        val swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)
-
-        swipeRefresh.setOnRefreshListener {
-            mainFragmentViewModel.getRecipes()
-            swipeRefresh.isRefreshing = false
-            binding.mainInputField.text?.clear()
-            binding.mainInputField.clearFocus()
-            hideKeyboard(requireContext(), binding.mainInputField)
         }
 
     }

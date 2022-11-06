@@ -74,26 +74,16 @@
         app:layout_constraintTop_toBottomOf="@id/search_container"
         >
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh"
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/main_recycler"
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/recipe_item"
 
-            <androidx.recyclerview.widget.RecyclerView
-
-                android:id="@+id/main_recycler"
-
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/recipe_item"
-                />
-
-
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            />
 
         <ProgressBar
             android:id="@+id/main_progress_bar"

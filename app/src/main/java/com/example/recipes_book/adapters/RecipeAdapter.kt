@@ -8,12 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.toColorInt
+import androidx.core.view.marginTop
+import androidx.core.view.setMargins
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -111,6 +115,19 @@ class RecipeAdapter(private val onFavouritesClick: FavouritesClickListener):
                 .into(holder.imageView)
 
         }
+
+        val params = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        when (position) {
+            0 -> params.setMargins(40, 40, 40, 10)
+            recipes.size - 1 -> params.setMargins(40, 10, 40, 40)
+            else -> params.setMargins(40, 10, 40 ,10)
+        }
+
+        holder.card.layoutParams = params
+
 
         CoroutineScope(Dispatchers.Main).launch {
             val palette = Palette.from(imageBitmap!!).generate()

@@ -8,8 +8,8 @@
 
     android:layout_marginStart="@dimen/large_margin"
     android:layout_marginEnd="@dimen/large_margin"
-    android:layout_marginTop="@dimen/large_margin"
-    android:layout_marginBottom ="@dimen/large_margin"
+    android:layout_marginTop="@dimen/small_margin"
+    android:layout_marginBottom ="@dimen/small_margin"
 
 
     app:cardCornerRadius="@dimen/recipe_card_corners"

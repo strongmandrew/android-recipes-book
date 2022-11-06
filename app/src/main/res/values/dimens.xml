@@ -16,5 +16,6 @@
     <dimen name="favourites_toolbar_height">80dp</dimen>
     <dimen name="add_to_favourites_height">30dp</dimen>
     <dimen name="large_margin">20dp</dimen>
+    <dimen name="small_margin">5dp</dimen>
 
 </resources>
