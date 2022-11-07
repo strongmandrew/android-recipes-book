@@ -2,12 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".screens.MainFragment">
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,8 +25,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
 
-
-
             android:layout_width="match_parent"
             app:boxCornerRadiusBottomEnd="@dimen/search_container_input_radius"
             app:boxCornerRadiusBottomStart="@dimen/search_container_input_radius"
@@ -37,13 +34,14 @@
             android:layout_height="match_parent"
             android:hint="@string/search_container_hint"
             app:endIconMode="clear_text"
-            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:boxStrokeColor="#FFF"
+            app:boxBackgroundColor="#FFF"
             app:endIconCheckable="true"
             app:endIconDrawable="@drawable/ico_close"
             app:startIconDrawable="@drawable/ico_search"
-
             android:padding="@dimen/normal_padding"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -53,6 +51,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
+                android:background="@drawable/input_field_shape"
 
                 android:imeOptions="actionSearch"
                 android:inputType="text"
@@ -63,37 +62,48 @@
 
     </LinearLayout>
 
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/recycler_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/recycler_container"
+        android:background="@drawable/fragment_container_shape"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_container"
-        >
+        app:layout_constraintTop_toBottomOf="@id/search_container">
 
-        <androidx.recyclerview.widget.RecyclerView
 
-            android:id="@+id/main_recycler"
+        <com.google.android.material.card.MaterialCardView
 
+            style="@style/fragment_container_card"
+            app:cardPreventCornerOverlap="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/recipe_item"
 
-            />
+            >
 
-        <ProgressBar
-            android:id="@+id/main_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            />
+            <androidx.recyclerview.widget.RecyclerView
 
-    </FrameLayout>
+                android:id="@+id/main_recycler"
+                android:layout_width="match_parent"
 
+                android:layout_height="match_parent"
+
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                tools:listitem="@layout/recipe_item" />
+
+            <ProgressBar
+
+                android:id="@+id/main_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,7 +29,7 @@
             android:gravity="center_vertical"
             android:text="@string/favourites_title"
             android:textSize="@dimen/large_title_text"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:paddingStart="@dimen/normal_padding"
             android:paddingEnd="@dimen/normal_padding"
             android:textStyle="bold"

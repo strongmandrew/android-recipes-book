@@ -11,7 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-const val API_KEY = "fc95cd6874c34b8882b3338ae705b76b"
+const val API_KEY = "70254bc4318e40dcb6344aad63e456ec"
 const val RECIPES_AMOUNT = 100
 
 class MainFragmentViewModel(application: Application): AndroidViewModel(application) {
@@ -67,7 +67,7 @@ class MainFragmentViewModel(application: Application): AndroidViewModel(applicat
 
         if (visibleRecipes != RECIPES_AMOUNT) {
 
-            visibleRecipes += 10
+            visibleRecipes += 20
             visibleRecipesLiveData.value = recipesLiveData.value?.take(visibleRecipes)
 
         }

@@ -1,69 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false"
+    android:clipChildren="true"
     tools:context=".screens.MainActivity">
+
 
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navigation_host"
         android:name="com.example.recipes_book.screens.MainFragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
 
-        app:layout_constraintBottom_toTopOf="@id/bottom_container"
-        app:layout_constraintEnd_toEndOf="parent"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        />
 
-    <FrameLayout
-        android:id="@+id/bottom_container"
+
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/blur_view"
         android:layout_width="match_parent"
+        android:layout_gravity="bottom"
         android:layout_height="@dimen/bottom_navigation_height"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@id/navigation_host"
         >
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-
+            app:itemPaddingTop="@dimen/bottom_navigation_padding"
+            app:itemPaddingBottom="@dimen/bottom_navigation_padding"
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_navigation_height"
-            android:background="@drawable/bottom_navigation_shape"
-
-            android:layout_gravity="bottom"
+            android:background="@color/white"
+            android:alpha="0.7"
 
             app:labelVisibilityMode="selected"
 
             app:menu="@menu/bottom_menu" />
 
 
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/bottom_navigation_height"
-        android:background="@drawable/bottom_navigation_shadow"
-            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/navigation_host"
-
-            />
+    </eightbitlab.com.blurview.BlurView>
 
 
 
-    </FrameLayout>
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

@@ -11,19 +11,22 @@
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/drawable/circled_favourites.xml" value="0.1355" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/drawable/circled_item.xml" value="0.202" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/drawable/circled_recipe.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/drawable/fragment_shape.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/drawable/ic_baseline_list_alt_24.xml" value="0.1355" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/drawable/ic_recipe.xml" value="0.143" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/drawable/ico_search.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/drawable/ico_star.xml" value="0.143" />
+        <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/drawable/input_field_shape.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/drawable/recipe_icon_selector.xml" value="0.2595" />
+        <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/drawable/recycler_container_shape.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/drawable/toolbar_shape.xml" value="0.1" />
-        <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/layout/activity_main.xml" value="0.12962962962962962" />
-        <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/layout/fragment_favorites.xml" value="0.5185972369819342" />
+        <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/layout/fragment_favorites.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/layout/fragment_main.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/layout/fragment_onboard.xml" value="0.22826086956521738" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/layout/fragment_recipe.xml" value="0.22826086956521738" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/layout/recipe_favourite_item.xml" value="0.24139492753623187" />
-        <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/layout/recipe_item.xml" value="0.24818840579710144" />
+        <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/layout/recipe_item.xml" value="0.4" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/layout/recipe_main_item.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/menu/bottom_menu.xml" value="0.253125" />
         <entry key="..\:/AndroidStudioProjects/recipes_book/app/src/main/res/menu/main_toolbar.xml" value="0.25416666666666665" />

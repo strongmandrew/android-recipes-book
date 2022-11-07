@@ -14,6 +14,9 @@ android {
         versionCode 1
         versionName "1.0"
 
+        renderscriptTargetApi 32
+        renderscriptSupportModeEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -50,7 +53,7 @@ dependencies {
 
     def glide_version = "4.14.2"
     implementation "com.github.bumptech.glide:glide:$glide_version"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     def coroutines_version = "1.6.4"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
@@ -62,8 +65,11 @@ dependencies {
     implementation "androidx.palette:palette:$palette_version"
 
     def swipe_refresh = "1.1.0"
-
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
+
+    implementation 'jp.wasabeef:blurry:4.0.1'
+
+    implementation 'com.github.Dimezis:BlurView:version-2.0.2'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'

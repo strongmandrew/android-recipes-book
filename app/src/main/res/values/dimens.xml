@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="bottom_navigation_height">60dp</dimen>
+    <dimen name="bottom_navigation_height">70dp</dimen>
     <dimen name="bottom_navigation_radius">20dp</dimen>
     <dimen name="normal_text_padding">10dp</dimen>
     <dimen name="normal_margin">10dp</dimen>
@@ -17,5 +17,9 @@
     <dimen name="add_to_favourites_height">30dp</dimen>
     <dimen name="large_margin">20dp</dimen>
     <dimen name="small_margin">5dp</dimen>
+    <dimen name="bottom_navigation_padding">15dp</dimen>
+    <dimen name="fragment_container_radius">40dp</dimen>
+    <dimen name="shape_image_radius">24dp</dimen>
+    <dimen name="search_input_radius">50dp</dimen>
 
 </resources>
