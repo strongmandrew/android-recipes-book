@@ -16,9 +16,9 @@ interface ApiService {
     : Response<Result>
 
     @GET("complexSearch")
-    suspend fun searchRecipes(@Query("apiKey") apiKey: String,
-                                 @Query("number") number: Int,
-                                 @Query("query") query: String)
+    suspend fun searchRecipe(@Query("apiKey") apiKey: String,
+                             @Query("number") number: Int,
+                             @Query("query") query: String)
     : Response<SearchResult>
 
 }

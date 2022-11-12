@@ -15,7 +15,7 @@ import com.example.recipes_book.R
 import com.example.recipes_book.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
-import eightbitlab.com.blurview.RenderEffectBlur
+import eightbitlab.com.blurview.RenderScriptBlur
 import jp.wasabeef.blurry.Blurry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mActivityMainBinding: ActivityMainBinding
 
-    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -71,7 +70,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
     private fun setBottomNavigationBlur() {
         val blurRadius = 10f
         val decorView = window.decorView
@@ -79,7 +77,7 @@ class MainActivity : AppCompatActivity() {
             .findViewById<ViewGroup>(android.R.id.content)
         val windowBackground = decorView.background
 
-        mActivityMainBinding.blurView.setupWith(rootView, RenderEffectBlur())
+        mActivityMainBinding.blurView.setupWith(rootView, RenderScriptBlur(this))
             .setFrameClearDrawable(windowBackground)
             .setBlurRadius(blurRadius)
     }

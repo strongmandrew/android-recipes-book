@@ -1,47 +1,37 @@
 package com.example.recipes_book.viewModels
 
 import android.app.Application
-import android.content.Context
-import android.view.View
 import androidx.lifecycle.*
 import com.example.recipes_book.data.retrofit.RetrofitInstance
 import com.example.recipes_book.data.room.FavouriteDatabase
 import com.example.recipes_book.models.room.Recipe
-import com.google.android.material.snackbar.Snackbar
+import com.example.recipes_book.repository.FavouritesRepository
+import com.example.recipes_book.repository.MainRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-const val API_KEY = "70254bc4318e40dcb6344aad63e456ec"
-const val RECIPES_AMOUNT = 100
+class MainFragmentViewModel(
+    private val mainRepository: MainRepository,
+    private val favouritesRepository: FavouritesRepository): ViewModel() {
 
-class MainFragmentViewModel(application: Application): AndroidViewModel(application) {
-
-    private val recipesLiveData = MutableLiveData<List<Recipe>>()
-    private val visibleRecipesLiveData = MutableLiveData<List<Recipe>>()
-
-    private val api = RetrofitInstance.api
-
-    private val dao by lazy {
-        FavouriteDatabase.getInstance(application).getFavouritesDao()
-    }
-
-    val loadingLiveData = MutableLiveData<Boolean>()
-
-    private var visibleRecipes = 10
+    private val _recipesLiveData = MutableLiveData<List<Recipe>>()
+    val recipesLiveData: LiveData<List<Recipe>> = _recipesLiveData
+    private val _loadingLiveData = MutableLiveData<Boolean>()
+    val loadingLiveData: LiveData<Boolean> = _loadingLiveData
 
     fun getRecipes() {
-        loadingLiveData.value = true
+        _loadingLiveData.value = true
 
         val recipes = arrayListOf<Recipe>()
 
         viewModelScope.launch(Dispatchers.Main) {
 
-            val apiResult = api.getRandomRecipes(API_KEY, RECIPES_AMOUNT)
+            val apiResult = mainRepository.getRandomRecipes()
                 .body()
 
             apiResult?.recipes?.forEach {
 
-                if (dao.entryInFavourites(it.id) > 0)  {
+                if (favouritesRepository.isInFavourites(it.toRecipe()) > 0)  {
                     recipes.add(it.toRecipe(true))
                 }
                 else {
@@ -53,33 +43,18 @@ class MainFragmentViewModel(application: Application): AndroidViewModel(applicat
 
 
 
-            recipesLiveData.value = recipes
+            _recipesLiveData.value = recipes
 
-            loadingLiveData.value = false
-
-            visibleRecipesLiveData.value = recipes.take(visibleRecipes)
+            _loadingLiveData.value = false
 
         }
 
     }
-
-    fun extendVisibleRecipes() {
-
-        if (visibleRecipes != RECIPES_AMOUNT) {
-
-            visibleRecipes += 20
-            visibleRecipesLiveData.value = recipesLiveData.value?.take(visibleRecipes)
-
-        }
-
-    }
-
-
 
     fun deleteFromFavourites(recipe: Recipe) {
 
         viewModelScope.launch {
-            dao.delete(recipe)
+            favouritesRepository.delete(recipe)
 
         }
 
@@ -88,24 +63,24 @@ class MainFragmentViewModel(application: Application): AndroidViewModel(applicat
     fun addToFavourites(recipe: Recipe) {
 
         viewModelScope.launch {
-            dao.insert(recipe)
+            favouritesRepository.insert(recipe)
         }
 
     }
 
     fun searchRecipe(query: String) {
-        loadingLiveData.value = true
+        _loadingLiveData.value = true
 
         val recipes = arrayListOf<Recipe>()
 
         viewModelScope.launch(Dispatchers.Main) {
 
-            val apiResult = api.searchRecipes(API_KEY, RECIPES_AMOUNT, query)
+            val apiResult = mainRepository.searchRecipe(query)
                 .body()
 
             apiResult?.results?.forEach {
 
-                if (dao.entryInFavourites(it.id) > 0)  {
+                if (favouritesRepository.isInFavourites(it.toRecipe()) > 0)  {
                     recipes.add(it.toRecipe(true))
                 }
                 else {
@@ -116,22 +91,11 @@ class MainFragmentViewModel(application: Application): AndroidViewModel(applicat
 
             }
 
-            recipesLiveData.value = recipes
+            _recipesLiveData.value = recipes
 
-            loadingLiveData.value = false
-
-            visibleRecipesLiveData.value = recipes.take(visibleRecipes)
-
+            _loadingLiveData.value = false
         }
 
-    }
-
-    fun getSeenRecipesLD(): LiveData<List<Recipe>> {
-        return visibleRecipesLiveData
-    }
-
-    fun getVisibleRecipes(): Int {
-        return visibleRecipes
     }
 
 

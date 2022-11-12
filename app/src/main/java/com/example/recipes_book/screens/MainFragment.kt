@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipes_book.adapters.RecipeAdapter
 import com.example.recipes_book.adapters.RecyclerOutlineProvider
+import com.example.recipes_book.data.FavouritesRepositoryImpl
+import com.example.recipes_book.data.MainRepositoryImpl
 import com.example.recipes_book.databinding.FragmentMainBinding
 import com.example.recipes_book.models.room.Recipe
 import com.example.recipes_book.viewModels.MainFragmentViewModel
@@ -40,7 +42,8 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainFragmentViewModel = ViewModelProvider(this@MainFragment)[MainFragmentViewModel::class.java]
+        mainFragmentViewModel = MainFragmentViewModel(MainRepositoryImpl(),
+            FavouritesRepositoryImpl(requireContext()))
 
         val mainAdapter = adapterInit(view)
         adapterSetup(mainAdapter)
@@ -58,8 +61,8 @@ class MainFragment : Fragment() {
 
         }
 
-        mainFragmentViewModel.getSeenRecipesLD().observe(viewLifecycleOwner) {
-            mainAdapter.recipes = it
+        mainFragmentViewModel.recipesLiveData.observe(viewLifecycleOwner) {
+            mainAdapter.submitList(it)
         }
 
 
@@ -98,25 +101,6 @@ class MainFragment : Fragment() {
 
         }
 
-
-        binding.mainRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (newState == RecyclerView.SCROLL_STATE_DRAGGING ||
-                    newState == RecyclerView.SCROLL_STATE_IDLE
-                ) {
-
-                    val manager = recyclerView.layoutManager as LinearLayoutManager
-
-                    if (mainFragmentViewModel.getVisibleRecipes() -
-                        manager.findLastVisibleItemPosition() < 15
-                    ) {
-
-                        mainFragmentViewModel.extendVisibleRecipes()
-                    }
-
-                }
-            }
-        })
     }
 
     private fun adapterInit(view: View): RecipeAdapter {
