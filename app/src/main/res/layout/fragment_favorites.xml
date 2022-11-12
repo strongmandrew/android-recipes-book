@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".screens.FavoritesFragment">
 
@@ -19,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/view_switcher"
+        app:layout_constraintBottom_toTopOf="@id/recycler_container"
         >
 
         <TextView
@@ -38,26 +39,35 @@
 
     </LinearLayout>
 
-    <ViewSwitcher
-        android:id="@+id/view_switcher"
-
+    <LinearLayout
+        android:id="@+id/recycler_container"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
+        android:background="@drawable/fragment_container_shape"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_container">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/favourites_recycler"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            style="@style/fragment_container_card"
+            app:cardPreventCornerOverlap="false">
 
-            tools:listitem="@layout/recipe_item" />
 
-    </ViewSwitcher>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/favourites_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                tools:listitem="@layout/recipe_item" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
