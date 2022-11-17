@@ -3,6 +3,7 @@ package com.example.recipes_book.screens
 import BounceEdgeEffectFactory
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -16,13 +17,17 @@ import com.example.recipes_book.adapters.RecipeAdapter
 import com.example.recipes_book.adapters.RecyclerOutlineProvider
 import com.example.recipes_book.data.FavouritesRepositoryImpl
 import com.example.recipes_book.data.MainRepositoryImpl
+import com.example.recipes_book.databinding.CurrentStateBinding
 import com.example.recipes_book.databinding.FragmentMainBinding
+import com.example.recipes_book.models.Status
 import com.example.recipes_book.models.room.Recipe
 import com.example.recipes_book.viewModels.MainFragmentViewModel
 import com.google.android.material.snackbar.Snackbar
 import java.lang.RuntimeException
 
-class MainFragment : Fragment() {
+private const val TAG = "MainFragment"
+
+class MainFragment : BaseFragment() {
 
     private lateinit var mainFragmentViewModel: MainFragmentViewModel
     private var _binding : FragmentMainBinding? = null
@@ -42,33 +47,54 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val stateBinding = CurrentStateBinding.bind(binding.root)
+
         mainFragmentViewModel = MainFragmentViewModel(MainRepositoryImpl(),
             FavouritesRepositoryImpl(requireContext()))
 
         val mainAdapter = adapterInit(view)
         adapterSetup(mainAdapter)
 
-        mainFragmentViewModel.loadingLiveData.observe(viewLifecycleOwner) {
+        mainFragmentViewModel.recipesLiveData.observe(viewLifecycleOwner) { state ->
 
-            if (it) {
-                binding.mainRecycler.visibility = RecyclerView.GONE
-                binding.mainProgressBar.visibility = ProgressBar.VISIBLE
-            }
-            else {
-                binding.mainProgressBar.visibility = ProgressBar.GONE
-                binding.mainRecycler.visibility = RecyclerView.VISIBLE
-            }
+            renderState(
+                root = binding.root,
+                state = state,
+                onLoading = {
+                    binding.searchContainer.visibility = View.VISIBLE
+                    binding.recyclerContainer.visibility = View.VISIBLE
+                    binding.mainRecycler.visibility = View.GONE
+                    stateBinding.progressBar.visibility = ProgressBar.VISIBLE
+                },
+                onSuccess = {
+                    binding.recyclerContainer.visibility = View.VISIBLE
+                    binding.searchContainer.visibility = View.VISIBLE
+                    binding.mainRecycler.visibility = View.VISIBLE
+                    mainAdapter.submitList(state.data)
+                },
+                onError = {
+                    binding.searchContainer.visibility = View.VISIBLE
+                    binding.recyclerContainer.visibility = View.VISIBLE
+                    binding.mainRecycler.visibility = View.GONE
+                    stateBinding.errorState.visibility = View.VISIBLE
+                    Log.d(TAG, it)
+                },
+                onEmpty = {
+                    binding.searchContainer.visibility = View.VISIBLE
+                    binding.recyclerContainer.visibility = View.VISIBLE
+                    binding.mainRecycler.visibility = View.GONE
+                    stateBinding.emptyState.visibility = View.VISIBLE
+                })
 
         }
-
-        mainFragmentViewModel.recipesLiveData.observe(viewLifecycleOwner) {
-            mainAdapter.submitList(it)
-        }
-
 
         mainFragmentViewModel.getRecipes()
 
         searchSetup()
+
+        stateBinding.reloadButton.setOnClickListener {
+            mainFragmentViewModel.getRecipes()
+        }
 
     }
 
@@ -93,6 +119,7 @@ class MainFragment : Fragment() {
     }
 
     private fun adapterSetup(mainAdapter: RecipeAdapter) {
+
         with(binding.mainRecycler) {
             adapter = mainAdapter
             edgeEffectFactory = BounceEdgeEffectFactory()

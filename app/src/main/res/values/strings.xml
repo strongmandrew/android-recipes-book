@@ -8,4 +8,7 @@
     <string name="recipe_image">Recipe image</string>
     <string name="search_container_hint">Search</string>
     <string name="favourites_title">Favourites</string>
+    <string name="error_description">Error</string>
+    <string name="error_state_reload">Reload</string>
+    <string name="empty_description">Empty</string>
 </resources>

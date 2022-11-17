@@ -4,48 +4,56 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.recipes_book.data.retrofit.RetrofitInstance
 import com.example.recipes_book.data.room.FavouriteDatabase
+import com.example.recipes_book.models.State
+import com.example.recipes_book.models.retrofit.SearchRecipe
+import com.example.recipes_book.models.retrofit.SearchResult
 import com.example.recipes_book.models.room.Recipe
 import com.example.recipes_book.repository.FavouritesRepository
 import com.example.recipes_book.repository.MainRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.lang.Exception
+import java.net.SocketTimeoutException
 
 class MainFragmentViewModel(
     private val mainRepository: MainRepository,
     private val favouritesRepository: FavouritesRepository): ViewModel() {
 
-    private val _recipesLiveData = MutableLiveData<List<Recipe>>()
-    val recipesLiveData: LiveData<List<Recipe>> = _recipesLiveData
-    private val _loadingLiveData = MutableLiveData<Boolean>()
-    val loadingLiveData: LiveData<Boolean> = _loadingLiveData
+    private val _recipesLiveData = MutableLiveData<State<List<Recipe>>>()
+    val recipesLiveData: LiveData<State<List<Recipe>>> = _recipesLiveData
+
 
     fun getRecipes() {
-        _loadingLiveData.value = true
 
-        val recipes = arrayListOf<Recipe>()
+        var state: State<List<Recipe>>? = State.loading()
 
-        viewModelScope.launch(Dispatchers.Main) {
+        _recipesLiveData.value = state
 
-            val apiResult = mainRepository.getRandomRecipes()
-                .body()
+        viewModelScope.launch(Dispatchers.IO) {
 
-            apiResult?.recipes?.forEach {
+            try {
 
-                if (favouritesRepository.isInFavourites(it.toRecipe()) > 0)  {
-                    recipes.add(it.toRecipe(true))
+                val request = mainRepository.getRandomRecipes()
+
+                val recipes = arrayListOf<Recipe>()
+
+                request.body()?.recipes?.forEach { recipe ->
+
+                    if (favouritesRepository.isInFavourites(recipe.toRecipe()) > 0) {
+                        recipes.add(recipe.toRecipe(true))
+                    }
+                    else {
+                        recipes.add(recipe.toRecipe(false))
+                    }
                 }
-                else {
-                    recipes.add(it.toRecipe())
-                }
 
+                state = if (recipes.isEmpty()) State.empty() else State.success(recipes)
 
             }
+            catch (e: Exception) {
+                state = State.error(e.message)
+            }
 
-
-
-            _recipesLiveData.value = recipes
-
-            _loadingLiveData.value = false
+            _recipesLiveData.postValue(state)
 
         }
 
@@ -69,32 +77,40 @@ class MainFragmentViewModel(
     }
 
     fun searchRecipe(query: String) {
-        _loadingLiveData.value = true
 
-        val recipes = arrayListOf<Recipe>()
 
-        viewModelScope.launch(Dispatchers.Main) {
+        var state: State<List<Recipe>>? = State.loading()
 
-            val apiResult = mainRepository.searchRecipe(query)
-                .body()
+        _recipesLiveData.value = state
 
-            apiResult?.results?.forEach {
+        viewModelScope.launch(Dispatchers.IO) {
 
-                if (favouritesRepository.isInFavourites(it.toRecipe()) > 0)  {
-                    recipes.add(it.toRecipe(true))
+            try {
+
+                val request = mainRepository.searchRecipe(query)
+
+                val recipes = arrayListOf<Recipe>()
+
+                request.body()?.results?.forEach { searchRecipe ->
+
+                    if (favouritesRepository.isInFavourites(searchRecipe.toRecipe()) > 0) {
+                        recipes.add(searchRecipe.toRecipe(true))
+                    }
+                    else {
+                        recipes.add(searchRecipe.toRecipe(false))
+                    }
                 }
-                else {
-                    recipes.add(it.toRecipe())
-                }
 
-
+                state = if (recipes.isEmpty()) State.empty() else State.success(recipes)
 
             }
+            catch (e: SocketTimeoutException) {
+                state = State.error(e.message)
+            }
 
-            _recipesLiveData.value = recipes
+            _recipesLiveData.postValue(state)
 
-            _loadingLiveData.value = false
-        }
+    }
 
     }
 

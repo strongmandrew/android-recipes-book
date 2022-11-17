@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.recipes_book.R
 
+private const val TAG = "FavoritesFragment"
+
 class FavoritesFragment : Fragment() {
 
     override fun onCreateView(

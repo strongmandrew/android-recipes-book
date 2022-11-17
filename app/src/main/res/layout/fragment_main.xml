@@ -8,6 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".screens.MainFragment">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_toolbar_height"
@@ -64,46 +65,41 @@
 
     <LinearLayout
         android:id="@+id/recycler_container"
+        android:background="@drawable/fragment_container_shape"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/fragment_container_shape"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_container">
+        app:layout_constraintTop_toBottomOf="@id/search_container" >
 
+    <com.google.android.material.card.MaterialCardView
 
-        <com.google.android.material.card.MaterialCardView
+        style="@style/fragment_container_card"
+        app:cardPreventCornerOverlap="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-            style="@style/fragment_container_card"
-            app:cardPreventCornerOverlap="false"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/main_recycler"
             android:layout_width="match_parent"
+
             android:layout_height="match_parent"
 
-            >
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
-            <androidx.recyclerview.widget.RecyclerView
+            tools:listitem="@layout/recipe_item" />
 
-                android:id="@+id/main_recycler"
-                android:layout_width="match_parent"
 
-                android:layout_height="match_parent"
 
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
-                tools:listitem="@layout/recipe_item" />
-
-            <ProgressBar
-
-                android:id="@+id/main_progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-
-        </com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
+
+    <include layout="@layout/current_state" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

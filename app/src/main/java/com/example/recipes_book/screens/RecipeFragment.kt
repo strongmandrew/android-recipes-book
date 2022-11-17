@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.recipes_book.R
 
+private const val TAG = "RecipeFragment"
 
 class RecipeFragment : Fragment() {
 
