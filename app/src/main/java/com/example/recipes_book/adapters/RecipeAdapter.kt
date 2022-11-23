@@ -1,6 +1,7 @@
 package com.example.recipes_book.adapters
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.opengl.Visibility
 import android.util.Log
@@ -38,6 +39,7 @@ class RecipeAdapter(private val onFavouritesClick: FavouritesClickListener):
     ListAdapter<Recipe, RecipeViewHolder>(RecipeItemCallback()) {
 
     interface FavouritesClickListener {
+        fun onItemClick(recipe: Recipe)
         fun onAddClick(recipe: Recipe)
         fun onDeleteClick(recipe: Recipe)
     }
@@ -58,8 +60,9 @@ class RecipeAdapter(private val onFavouritesClick: FavouritesClickListener):
 
         var imageBitmap: Bitmap? = holder.imageView.drawable.toBitmap()
 
-        val loadImageScope = CoroutineScope(Dispatchers.Main).async {
-            Glide.with(holder.itemView)
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val glide = Glide.with(holder.itemView)
                 .load(getItem(position).imageUrl)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .addListener(object : RequestListener<Drawable> {
@@ -70,7 +73,8 @@ class RecipeAdapter(private val onFavouritesClick: FavouritesClickListener):
                         isFirstResource: Boolean
                     ): Boolean {
 
-                        holder.imageView.visibility = ImageView.GONE
+                        holder.imageView.visibility = View.GONE
+
                         return false
                     }
 
@@ -87,18 +91,18 @@ class RecipeAdapter(private val onFavouritesClick: FavouritesClickListener):
                         return false
                     }
                 })
-                .placeholder(R.drawable.ic_launcher_background)
-                .into(holder.imageView)
+                .placeholder(R.drawable.default_recipe)
 
+            withContext(Dispatchers.Main) {
+                glide.into(holder.imageView)
+            }
         }
 
         setCardMargins(position, holder)
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            loadImageScope.await()
-
-            val palette = Palette.from(imageBitmap!!).generate()
+            val palette = Palette.from(imageBitmap?: holder.defaultBitmap).generate()
 
             val mutedColor = palette.mutedSwatch
 
@@ -126,6 +130,10 @@ class RecipeAdapter(private val onFavouritesClick: FavouritesClickListener):
 
             if (newState) onFavouritesClick.onAddClick(getItem(position))
             else onFavouritesClick.onDeleteClick(getItem(position))
+        }
+
+        holder.imageView.setOnClickListener {
+            onFavouritesClick.onItemClick(getItem(position))
         }
     }
 

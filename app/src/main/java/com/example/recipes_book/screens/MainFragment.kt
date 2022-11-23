@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.recipes_book.R
 import com.example.recipes_book.adapters.RecipeAdapter
 import com.example.recipes_book.adapters.RecyclerOutlineProvider
 import com.example.recipes_book.data.FavouritesRepositoryImpl
@@ -152,6 +153,16 @@ class MainFragment : BaseFragment() {
                         Snackbar.LENGTH_SHORT
                     )
                     .show()
+            }
+
+            override fun onItemClick(recipe: Recipe) {
+                val recipeFragment = RecipeFragment()
+                val bundle = Bundle()
+                bundle.putParcelable("RECIPE", recipe)
+                recipeFragment.arguments = bundle
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.navigation_host, recipeFragment)
+                    .commit()
             }
         })
         return mainAdapter

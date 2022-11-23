@@ -11,4 +11,10 @@
     <string name="error_description">Error</string>
     <string name="error_state_reload">Reload</string>
     <string name="empty_description">Empty</string>
+    <string name="share_recipe">Share</string>
+    <string name="you_will_need">You wil need</string>
+    <string name="cooking_steps">Cooking steps</string>
+    <string name="no_recipe_steps">No cooking steps for the recipe</string>
+    <string name="look_at_the_source">Look at the source</string>
+    <string name="you_may_like">You may like</string>
 </resources>

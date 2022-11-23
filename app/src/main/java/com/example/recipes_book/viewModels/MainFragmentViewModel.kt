@@ -104,7 +104,7 @@ class MainFragmentViewModel(
                 state = if (recipes.isEmpty()) State.empty() else State.success(recipes)
 
             }
-            catch (e: SocketTimeoutException) {
+            catch (e: Exception) {
                 state = State.error(e.message)
             }
 

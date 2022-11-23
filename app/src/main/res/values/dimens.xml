@@ -5,7 +5,7 @@
     <dimen name="normal_text_padding">10dp</dimen>
     <dimen name="normal_margin">10dp</dimen>
     <dimen name="recipe_card_margin">20dp</dimen>
-    <dimen name="recipe_card_corners">24dp</dimen>
+    <dimen name="recipe_card_corners">40dp</dimen>
     <dimen name="search_container_input_radius">20dp</dimen>
     <dimen name="normal_text">16sp</dimen>
     <dimen name="normal_padding">10dp</dimen>
@@ -19,7 +19,9 @@
     <dimen name="small_margin">5dp</dimen>
     <dimen name="bottom_navigation_padding">15dp</dimen>
     <dimen name="fragment_container_radius">40dp</dimen>
-    <dimen name="shape_image_radius">24dp</dimen>
+    <dimen name="shape_image_radius">40dp</dimen>
     <dimen name="search_input_radius">50dp</dimen>
+    <dimen name="huge_margin">40dp</dimen>
+    <dimen name="similar_card_corners">20dp</dimen>
 
 </resources>

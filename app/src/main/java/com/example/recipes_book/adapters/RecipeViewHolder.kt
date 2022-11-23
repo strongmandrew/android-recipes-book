@@ -1,5 +1,6 @@
 package com.example.recipes_book.adapters
 
+import android.graphics.BitmapFactory
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
@@ -14,5 +15,9 @@ class RecipeViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     val titleField: TextView = itemView.findViewById(R.id.title_text)
     val favouritesButton: CheckBox = itemView.findViewById(R.id.favorites_btn)
     val imageView: ShapeableImageView = itemView.findViewById(R.id.image_view)
+
+    val defaultBitmap = BitmapFactory.decodeResource(
+        itemView.resources,
+        R.drawable.default_recipe)
 
 }

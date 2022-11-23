@@ -8,6 +8,15 @@
         <item name="cornerSizeBottomRight">@dimen/shape_image_radius</item>
     </style>
 
+    <style name="similar_item_photo">
+
+        <item name="cornerSizeTopLeft">@dimen/similar_card_corners</item>
+        <item name="cornerSizeTopRight">@dimen/similar_card_corners</item>
+        <item name="cornerSizeBottomLeft">@dimen/similar_card_corners</item>
+        <item name="cornerSizeBottomRight">@dimen/similar_card_corners</item>
+
+    </style>
+
     <style name="fragment_container_card" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/fragment_container</item>
     </style>

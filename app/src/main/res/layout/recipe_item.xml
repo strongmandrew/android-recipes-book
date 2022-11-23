@@ -30,7 +30,7 @@
             android:adjustViewBounds="true"
             android:layout_gravity="center"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/default_recipe"
             app:shapeAppearanceOverlay="@style/recipe_item_photo"
             android:contentDescription="@string/recipe_image" />
 
