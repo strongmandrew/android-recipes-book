@@ -3,16 +3,15 @@ package com.example.recipes_book.screens
 import BounceEdgeEffectFactory
 import android.content.Context
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ProgressBar
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.recipes_book.R
 import com.example.recipes_book.adapters.RecipeAdapter
 import com.example.recipes_book.adapters.RecyclerOutlineProvider
@@ -20,11 +19,11 @@ import com.example.recipes_book.data.FavouritesRepositoryImpl
 import com.example.recipes_book.data.MainRepositoryImpl
 import com.example.recipes_book.databinding.CurrentStateBinding
 import com.example.recipes_book.databinding.FragmentMainBinding
-import com.example.recipes_book.models.Status
 import com.example.recipes_book.models.room.Recipe
 import com.example.recipes_book.viewModels.MainFragmentViewModel
 import com.google.android.material.snackbar.Snackbar
 import java.lang.RuntimeException
+import java.text.FieldPosition
 
 private const val TAG = "MainFragment"
 
@@ -50,10 +49,17 @@ class MainFragment : BaseFragment() {
 
         val stateBinding = CurrentStateBinding.bind(binding.root)
 
-        mainFragmentViewModel = MainFragmentViewModel(MainRepositoryImpl(),
-            FavouritesRepositoryImpl(requireContext()))
+        mainFragmentViewModel = MainFragmentViewModel(
+            MainRepositoryImpl(),
+            FavouritesRepositoryImpl(requireContext())
+        )
 
-        val mainAdapter = adapterInit(view)
+        val mainAdapter: RecipeAdapter = adapterInit(binding.root, arrayListOf())
+
+        stateBinding.reloadButton.setOnClickListener {
+            mainFragmentViewModel.getRecipes()
+        }
+
         adapterSetup(mainAdapter)
 
         mainFragmentViewModel.recipesLiveData.observe(viewLifecycleOwner) { state ->
@@ -71,7 +77,9 @@ class MainFragment : BaseFragment() {
                     binding.recyclerContainer.visibility = View.VISIBLE
                     binding.searchContainer.visibility = View.VISIBLE
                     binding.mainRecycler.visibility = View.VISIBLE
-                    mainAdapter.submitList(state.data)
+
+
+                    mainAdapter.submitList(state.data as ArrayList<Recipe> /* = java.util.ArrayList<com.example.recipes_book.models.room.Recipe> */)
                 },
                 onError = {
                     binding.searchContainer.visibility = View.VISIBLE
@@ -91,11 +99,10 @@ class MainFragment : BaseFragment() {
 
         mainFragmentViewModel.getRecipes()
 
+
+
         searchSetup()
 
-        stateBinding.reloadButton.setOnClickListener {
-            mainFragmentViewModel.getRecipes()
-        }
 
     }
 
@@ -131,9 +138,9 @@ class MainFragment : BaseFragment() {
 
     }
 
-    private fun adapterInit(view: View): RecipeAdapter {
-        val mainAdapter = RecipeAdapter(object : RecipeAdapter.FavouritesClickListener {
-            override fun onAddClick(recipe: Recipe) {
+    private fun adapterInit(view: View, data: ArrayList<Recipe>): RecipeAdapter {
+        val mainAdapter = RecipeAdapter(data, object : RecipeAdapter.FavouritesClickListener {
+            override fun onAddClick(recipe: Recipe, position: Int) {
                 mainFragmentViewModel.addToFavourites(recipe)
                 Snackbar
                     .make(
@@ -144,7 +151,7 @@ class MainFragment : BaseFragment() {
                     .show()
             }
 
-            override fun onDeleteClick(recipe: Recipe) {
+            override fun onDeleteClick(recipe: Recipe, position: Int, adapter: RecipeAdapter) {
                 mainFragmentViewModel.deleteFromFavourites(recipe)
                 Snackbar
                     .make(
@@ -155,13 +162,14 @@ class MainFragment : BaseFragment() {
                     .show()
             }
 
-            override fun onItemClick(recipe: Recipe) {
+            override fun onItemClick(view: View, recipe: Recipe) {
                 val recipeFragment = RecipeFragment()
                 val bundle = Bundle()
                 bundle.putParcelable("RECIPE", recipe)
                 recipeFragment.arguments = bundle
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.navigation_host, recipeFragment)
+                    .addToBackStack(null)
                     .commit()
             }
         })
@@ -176,6 +184,19 @@ class MainFragment : BaseFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+
+
+        /*val manager = binding.mainRecycler.layoutManager as LinearLayoutManager
+        val position = manager.findFirstCompletelyVisibleItemPosition()
+
+        val bundle = Bundle().apply {
+            putParcelableArrayList(RECYCLER_DATA, recyclerData)
+            putInt(RECYCLER_POSITION, position)
+            putString(SEARCH_TEXT, binding.mainInputField.text.toString())
+        }
+
+        saveState(bundle)*/
+
         _binding = null
     }
 }

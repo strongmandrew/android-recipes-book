@@ -1,6 +1,8 @@
 package com.example.recipes_book.models.retrofit
 
+import android.os.Parcelable
 import com.example.recipes_book.models.room.Recipe
+import kotlinx.android.parcel.Parcelize
 
 data class Recipe(
     val aggregateLikes: Int,

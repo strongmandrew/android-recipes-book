@@ -14,6 +14,8 @@ import kotlinx.coroutines.*
 import java.lang.Exception
 import java.net.SocketTimeoutException
 
+private const val SEARCH_AMOUNT = 100
+
 class MainFragmentViewModel(
     private val mainRepository: MainRepository,
     private val favouritesRepository: FavouritesRepository): ViewModel() {
@@ -38,7 +40,7 @@ class MainFragmentViewModel(
 
                 request.body()?.recipes?.forEach { recipe ->
 
-                    if (favouritesRepository.isInFavourites(recipe.toRecipe()) > 0) {
+                    if (favouritesRepository.isInFavourites(recipe.id) > 0) {
                         recipes.add(recipe.toRecipe(true))
                     }
                     else {
@@ -87,13 +89,13 @@ class MainFragmentViewModel(
 
             try {
 
-                val request = mainRepository.searchRecipe(query)
+                val request = mainRepository.searchRecipe(query, SEARCH_AMOUNT)
 
                 val recipes = arrayListOf<Recipe>()
 
                 request.body()?.results?.forEach { searchRecipe ->
 
-                    if (favouritesRepository.isInFavourites(searchRecipe.toRecipe()) > 0) {
+                    if (favouritesRepository.isInFavourites(searchRecipe.id) > 0) {
                         recipes.add(searchRecipe.toRecipe(true))
                     }
                     else {

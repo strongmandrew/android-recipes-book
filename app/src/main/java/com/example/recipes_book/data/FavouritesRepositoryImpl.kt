@@ -11,6 +11,10 @@ class FavouritesRepositoryImpl(context: Context): FavouritesRepository {
         FavouriteDatabase.getInstance(context).getFavouritesDao()
     }
 
+    override suspend fun deleteAll() {
+        dao.deleteAll()
+    }
+
     override suspend fun getAllFavourites(): List<Recipe> {
         return dao.getAllFavourites()
     }
@@ -23,7 +27,7 @@ class FavouritesRepositoryImpl(context: Context): FavouritesRepository {
         dao.delete(recipe)
     }
 
-    override suspend fun isInFavourites(recipe: Recipe): Int {
-        return dao.isInFavourites(recipe.id)
+    override fun isInFavourites(id: Int): Int {
+        return dao.isInFavourites(id)
     }
 }

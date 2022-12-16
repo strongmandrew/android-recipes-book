@@ -7,5 +7,6 @@ interface FavouritesRepository {
     suspend fun getAllFavourites(): List<Recipe>
     suspend fun insert(recipe: Recipe)
     suspend fun delete(recipe: Recipe)
-    suspend fun isInFavourites(recipe: Recipe): Int
+    fun isInFavourites(id: Int): Int
+    suspend fun deleteAll()
 }

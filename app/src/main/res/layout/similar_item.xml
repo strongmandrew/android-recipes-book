@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/similar_card"
     android:layout_width="80dp"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/normal_margin"
@@ -14,6 +15,7 @@
         android:orientation="vertical" >
         
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/similar_image"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             app:shapeAppearanceOverlay="@style/similar_item_photo"
@@ -23,6 +25,7 @@
             android:layout_gravity="center" />
 
         <TextView
+            android:id="@+id/similar_title"
             android:paddingStart="@dimen/normal_padding"
             android:paddingEnd="@dimen/normal_padding"
             android:paddingBottom="@dimen/small_margin"

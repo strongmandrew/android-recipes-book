@@ -6,6 +6,7 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import com.example.recipes_book.models.State
 import com.example.recipes_book.models.Status
+import com.google.android.material.snackbar.Snackbar
 
 open class BaseFragment: Fragment() {
 
@@ -23,6 +24,10 @@ open class BaseFragment: Fragment() {
             Status.EMPTY -> onEmpty()
             Status.ERROR -> onError(state.message!!)
         }
+    }
+
+    fun showSnackBar(message: String) {
+        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
     }
 
 }
