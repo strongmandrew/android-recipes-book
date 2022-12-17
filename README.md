@@ -4,7 +4,7 @@
 
 ![](app/src/main/res/drawable/app_demo.gif)
 
-***UI/UX design produced by [@krasavcev](github.com/krasavcev)***
+***UI/UX design produced by [@krasavcev](https://github.com/krasavcev)***
 
 ## What is used:
 1. MVVM (Single-Activity-App)
