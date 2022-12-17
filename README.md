@@ -1,9 +1,10 @@
-# android-recipes-book powered by [Spoonacular API](https://spoonacular.com/food-api)
+# Recipes book powered by [Spoonacular API](https://spoonacular.com/food-api)
 
-###How it works:
+## How it works:
+
 ![](app/src/main/res/drawable/app_demo.gif)
 
-###What is used:
+## What is used:
 1. MVVM (Single-Activity-App)
 2. Retrofit
 3. Room
