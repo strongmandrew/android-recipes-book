@@ -63,7 +63,7 @@ class FavoritesFragment : BaseFragment() {
 
 
                     val favouritesAdapter = RecipeAdapter(it as ArrayList<Recipe> /* = java.util.ArrayList<com.example.recipes_book.models.room.Recipe> */,object : RecipeAdapter.FavouritesClickListener {
-                        override fun onAddClick(recipe: Recipe, position: Int) {
+                        override fun onAddClick(recipe: Recipe, position: Int, adapter: RecipeAdapter) {
 
                             favouritesFragmentViewModel.addToFavourites(recipe)
 
@@ -72,7 +72,7 @@ class FavoritesFragment : BaseFragment() {
                         override fun onDeleteClick(recipe: Recipe, position: Int, adapter: RecipeAdapter) {
 
                             favouritesFragmentViewModel.deleteFromFavourites(recipe)
-                            adapter.removeRecipe(recipe, position)
+
 
                             Snackbar
                                 .make(
@@ -80,12 +80,13 @@ class FavoritesFragment : BaseFragment() {
                                     "${recipe.title} deleted from favourites!",
                                     Snackbar.LENGTH_SHORT
                                 )
+                                .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation))
                                 .show()
 
-
+                            adapter.removeRecipe(recipe, position)
                         }
 
-                        override fun onItemClick(view: View, recipe: Recipe) {
+                        override fun onItemClick(recipe: Recipe) {
                             val recipeFragment = RecipeFragment()
                             val bundle = Bundle()
                             bundle.putParcelable("RECIPE", recipe)

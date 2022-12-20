@@ -91,7 +91,7 @@
 
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
-            tools:listitem="@layout/recipe_item" />
+            tools:listitem="@layout/recipe_general_item" />
 
 
 

@@ -223,7 +223,7 @@ class RecipeFragment : BaseFragment() {
         binding.shareButton.setOnClickListener {
 
             val shareText = "I've liked ${receivedRecipe?.title} recipe in Recipe book. Join us! " +
-                    "https://play.google.com/store/apps/details?id=com.tudorspan.recipekeeper"
+                    "\nhttps://github.com/strongmandrew/android-recipes-book"
 
             val share = Intent().apply {
                 action = Intent.ACTION_SEND

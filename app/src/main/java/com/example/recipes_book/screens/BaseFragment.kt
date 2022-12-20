@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import com.example.recipes_book.R
 import com.example.recipes_book.models.State
 import com.example.recipes_book.models.Status
 import com.google.android.material.snackbar.Snackbar
@@ -27,7 +28,9 @@ open class BaseFragment: Fragment() {
     }
 
     fun showSnackBar(message: String) {
-        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT)
+            .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation))
+            .show()
     }
 
 }

@@ -16,18 +16,38 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-    <ImageView
-        android:id="@+id/empty_state"
-        android:contentDescription="@string/empty_description"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:src="@drawable/empty_state"
-
+    <LinearLayout
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/empty_state"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+
+        <ImageView
+
+            android:contentDescription="@string/empty_description"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:src="@drawable/empty_state"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_recipes_found"
+            android:textSize="@dimen/large_title_text"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+
 
     <LinearLayout
         app:layout_constraintTop_toTopOf="parent"

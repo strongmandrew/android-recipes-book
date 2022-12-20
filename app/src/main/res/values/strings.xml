@@ -17,4 +17,5 @@
     <string name="no_recipe_steps">No cooking steps for the recipe</string>
     <string name="look_at_the_source">Look at the source</string>
     <string name="you_may_like">You may like</string>
+    <string name="no_recipes_found">No recipes found</string>
 </resources>

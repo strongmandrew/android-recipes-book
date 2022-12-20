@@ -140,7 +140,7 @@ class MainFragment : BaseFragment() {
 
     private fun adapterInit(view: View, data: ArrayList<Recipe>): RecipeAdapter {
         val mainAdapter = RecipeAdapter(data, object : RecipeAdapter.FavouritesClickListener {
-            override fun onAddClick(recipe: Recipe, position: Int) {
+            override fun onAddClick(recipe: Recipe, position: Int, adapter: RecipeAdapter) {
                 mainFragmentViewModel.addToFavourites(recipe)
                 Snackbar
                     .make(
@@ -148,7 +148,10 @@ class MainFragment : BaseFragment() {
                         "${recipe.title} added to favourites!",
                         Snackbar.LENGTH_SHORT
                     )
+                    .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation))
                     .show()
+                adapter.itemHasBeenChanged(position)
+
             }
 
             override fun onDeleteClick(recipe: Recipe, position: Int, adapter: RecipeAdapter) {
@@ -159,10 +162,12 @@ class MainFragment : BaseFragment() {
                         "${recipe.title} deleted from favourites!",
                         Snackbar.LENGTH_SHORT
                     )
+                    .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation))
                     .show()
+                adapter.itemHasBeenChanged(position)
             }
 
-            override fun onItemClick(view: View, recipe: Recipe) {
+            override fun onItemClick(recipe: Recipe) {
                 val recipeFragment = RecipeFragment()
                 val bundle = Bundle()
                 bundle.putParcelable("RECIPE", recipe)
