@@ -24,7 +24,7 @@ class MainRepositoryImpl: MainRepository {
         return apiService.getRandomRecipes(API_KEY, RANDOM_AMOUNT)
     }
 
-    override suspend fun searchRecipe(query: String, amount: Int): Response<SearchResult> {
+        override suspend fun searchRecipe(query: String, amount: Int): Response<SearchResult> {
         return apiService.searchRecipe(API_KEY, amount, query)
     }
 }

@@ -3,15 +3,12 @@ package com.example.recipes_book.screens
 import BounceEdgeEffectFactory
 import android.content.Context
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ProgressBar
-import androidx.cardview.widget.CardView
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recipes_book.R
 import com.example.recipes_book.adapters.RecipeAdapter
 import com.example.recipes_book.adapters.RecyclerOutlineProvider
@@ -23,7 +20,6 @@ import com.example.recipes_book.models.room.Recipe
 import com.example.recipes_book.viewModels.MainFragmentViewModel
 import com.google.android.material.snackbar.Snackbar
 import java.lang.RuntimeException
-import java.text.FieldPosition
 
 private const val TAG = "MainFragment"
 
@@ -138,7 +134,7 @@ class MainFragment : BaseFragment() {
 
     }
 
-    private fun adapterInit(view: View, data: ArrayList<Recipe>): RecipeAdapter {
+        private fun adapterInit(view: View, data: ArrayList<Recipe>): RecipeAdapter {
         val mainAdapter = RecipeAdapter(data, object : RecipeAdapter.FavouritesClickListener {
             override fun onAddClick(recipe: Recipe, position: Int, adapter: RecipeAdapter) {
                 mainFragmentViewModel.addToFavourites(recipe)
